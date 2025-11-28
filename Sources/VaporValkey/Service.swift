@@ -16,7 +16,7 @@ extension Application {
     ///     eventLoopGroup: app.eventLoopGroup,
     ///     logger: app.logger
     /// )
-    /// app.valkey.set("hello", value: "world")
+    /// try await app.valkey.set("hello", value: "world")
     /// app.get("hello") { req in
     ///    try await req.valkey.get("hello")?.string ?? "not found"
     /// }

@@ -12,7 +12,7 @@ public extension Application.Caches.Provider {
     ///     eventLoopGroup: app.eventLoopGroup,
     ///     logger: app.logger
     /// )
-    /// app.cache.use(.valkey())
+    /// app.caches.use(.valkey())
     /// try await app.cache.set("hello", to: "world")
     /// app.get("hello") { req in
     ///     try await req.cache.get("hello", as: String.self) ?? "not found"
