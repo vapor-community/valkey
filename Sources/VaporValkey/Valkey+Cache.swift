@@ -2,7 +2,22 @@ import Valkey
 import Vapor
 
 public extension Application.Caches.Provider {
-    // Use a Valkey client for the cache.
+    /// Use the Application's Valkey client for Vapor caching. The `Application.valkey` property must be set to use this.
+    ///
+    /// Here's a quick example:
+    /// ```swift
+    /// let app = Application.make(.detect)
+    /// app.valkey = ValkeyClient(
+    ///     .hostname("valkey", port: 6379),
+    ///     eventLoopGroup: app.eventLoopGroup,
+    ///     logger: app.logger
+    /// )
+    /// app.cache.use(.valkey())
+    /// try await app.cache.set("hello", to: "world")
+    /// app.get("hello") { req in
+    ///     try await req.cache.get("hello", as: String.self) ?? "not found"
+    /// }
+    /// ```
     static func valkey(
         encoder: JSONEncoder = JSONEncoder(),
         decoder: JSONDecoder = JSONDecoder()

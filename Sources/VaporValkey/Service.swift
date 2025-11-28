@@ -3,6 +3,24 @@ import Valkey
 import Vapor
 
 extension Application {
+    /// Binds a Valkey Client to the Application for later use via `Application.valkey` or `Request.valkey`.
+    ///
+    /// When this is called, the Application will take ownership of the Valkey client's lifecycle. Specifically, this assignment operation will automatically run the client, and it will be automatically cancelled when the Application is shut down.
+    ///
+    /// Here's a basic example:
+    ///
+    /// ```swift
+    /// let app = Application.make(.detect)
+    /// app.valkey = ValkeyClient(
+    ///     .hostname("valkey", port: 6379),
+    ///     eventLoopGroup: app.eventLoopGroup,
+    ///     logger: app.logger
+    /// )
+    /// app.valkey.set("hello", value: "world")
+    /// app.get("hello") { req in
+    ///    try await req.valkey.get("hello")?.string ?? "not found"
+    /// }
+    /// ```
     public var valkey: any ValkeyClientProtocol & ServiceLifecycle.Service {
         get {
             guard let valkeyClientStorage = storage[ValkeyClientKey.self] else {

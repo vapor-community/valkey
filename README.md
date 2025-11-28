@@ -4,25 +4,31 @@ This project provides [valkey-swift](https://github.com/valkey-io/valkey-swift) 
 
 ## Usage
 
-To use this package, create a Valkey client and assign it to `Application.valkey`:
+To use this package, add it as a dependency. Then create a Valkey client and assign it to `Application.valkey`:
 
 ```swift
-let vaporApp = Application.make(.detect)
+import Valkey
+import Vapor
+import VaporValkey
 
-let valkeyClient = ValkeyClient(
+let app = Application.make(.detect)
+
+// Attach Valkey service to enable `Application.valkey` & `Request.valkey`
+app.valkey = ValkeyClient(
     .hostname("localhost", port: 6379),
     eventLoopGroup: app.eventLoopGroup,
     logger: app.logger
 )
 
-// Attach Valkey service to enable `Application.valkey` & `Request.valkey`
-vaporApp.valkey = valkeyClient
+// Use the Valkey client for Vapor caching
+app.caches.use(.valkey())
 
-// Use Valkey for caching
-vaporApp.caches.use(.valkey())
-
-// Use Valkey for sessions
-vaporApp.sessions.use(.valkey())
+// Use the Valkey client for Vapor sessions
+app.sessions.use(.valkey())
 ```
 
 When assigning the Application's `valkey` property (the `vaporApp.valkey = valkeyClient` line above), the Application will take ownership of the Valkey client's lifecycle. Specifically, this assignment operation will automatically run the client, and it will be automatically cancelled when the Application is shut down.
+
+Application's `valkey` property can accept either `ValkeyClient` or `ValkeyClusterClient`. For more information about these clients and their configuration, see [valkey-swift](https://github.com/valkey-io/valkey-swift).
+
+For more information about Vapor's session system, see [Sessions](https://docs.vapor.codes/advanced/sessions/)

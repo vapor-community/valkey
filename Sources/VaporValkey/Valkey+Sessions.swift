@@ -2,7 +2,26 @@ import Valkey
 import Vapor
 
 public extension Application.Sessions.Provider {
-    /// Provides a Valkey sessions driver. If client is not provided, then `Application.valkey` must be configured.
+    /// Use the Application's Valkey client for Vapor sessions. The `Application.valkey` property must be set to use this.
+    ///
+    /// Here's a quick example:
+    /// ```swift
+    /// let app = Application.make(.detect)
+    /// app.valkey = ValkeyClient(
+    ///     .hostname("valkey", port: 6379),
+    ///     eventLoopGroup: app.eventLoopGroup,
+    ///     logger: app.logger
+    /// )
+    /// app.sessions.use(.valkey())
+    /// app.middleware.use(app.sessions.middleware)
+    /// app.get("set", ":name") { req in
+    ///     req.session.data["name"] = req.parameters.get("name")
+    ///     return .ok
+    /// }
+    /// app.get("hello") { req in
+    ///     req.session.data["name"] ?? "world"
+    /// }
+    /// ```
     static func valkey(
         encoder: JSONEncoder = JSONEncoder(),
         decoder: JSONDecoder = JSONDecoder()
