@@ -41,8 +41,8 @@ struct TestCache {
             let value = "\(Int.random())"
             try await app.cache.set(key, to: value)
             // Manually check Valkey as the JSON encoded representation, with quotes
-            var buffer = try #require(await client.get(.init(key)))
-            #expect(buffer.readString(length: buffer.readableBytes) == "\"\(value)\"")
+            var result = try #require(await client.get(.init(key)))
+            #expect(String(result) == "\"\(value)\"")
 
             // Check that setting to nil deletes the cached key
             let nilValue: String? = nil

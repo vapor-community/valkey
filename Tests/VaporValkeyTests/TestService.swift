@@ -17,7 +17,7 @@ struct TestService {
 
             let value = "\(Int.random())"
             try await app.valkey.set("test", value: value)
-            try await #expect(app.valkey.get("test")?.string == value)
+            try await #expect(app.valkey.get("test").map { String($0) } == value)
         }
     }
 }
