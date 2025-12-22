@@ -55,8 +55,8 @@ struct ValkeySessionsDriver: SessionDriver {
         let key = makeKey(sessionID: sessionID)
 
         return request.eventLoop.makeFutureWithTask {
-            try await request.valkey.get(.init(key)).map { buffer in
-                try decoder.decode(SessionData.self, from: buffer)
+            try await request.valkey.get(.init(key)).map { result in
+                try decoder.decode(SessionData.self, from: ByteBuffer(result))
             }
         }
     }

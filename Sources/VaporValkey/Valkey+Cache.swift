@@ -53,7 +53,7 @@ extension ValkeyCache: Cache {
         func get<T: Decodable & SendableMetatype>(_ key: String, as _: T.Type) -> EventLoopFuture<T?> {
             return eventLoopGroup.makeFutureWithTask {
                 try await client.get(.init(key)).map { result in
-                    try decoder.decode(T.self, from: result)
+                    try decoder.decode(T.self, from: ByteBuffer(result))
                 }
             }
         }
@@ -62,7 +62,7 @@ extension ValkeyCache: Cache {
         func get<T: Decodable>(_ key: String, as _: T.Type) -> EventLoopFuture<T?> {
             return eventLoopGroup.makeFutureWithTask {
                 try await client.get(.init(key)).map { result in
-                    try decoder.decode(T.self, from: result)
+                    try decoder.decode(T.self, from: ByteBuffer(result))
                 }
             }
         }
