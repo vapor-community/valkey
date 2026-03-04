@@ -1,5 +1,5 @@
 {
-  "originHash" : "d56bdb5b89188199a6a7dd1a91c43d40b65321e92de52e843fa01e6969db66b4",
+  "originHash" : "7030b1d56e39dc4811d9a1b7f3cda95f2ee78ababdb38e18e7220761d6766515",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -101,6 +101,15 @@
       }
     },
     {
+      "identity" : "swift-configuration",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-configuration.git",
+      "state" : {
+        "revision" : "1bb939fe7bbb00b8f8bab664cc90020c035c08d9",
+        "version" : "1.1.0"
+      }
+    },
+    {
       "identity" : "swift-crypto",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-crypto.git",
@@ -159,8 +168,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio.git",
       "state" : {
-        "revision" : "a1605a3303a28e14d822dec8aaa53da8a9490461",
-        "version" : "2.92.0"
+        "revision" : "e932d3c4d8f77433c8f7093b5ebcbf91463948a0",
+        "version" : "2.95.0"
       }
     },
     {
@@ -240,8 +249,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/valkey-io/valkey-swift.git",
       "state" : {
-        "revision" : "e4bbdd13c71f98dc66c176a776152268fd44a929",
-        "version" : "0.5.0"
+        "revision" : "8492225c27e1ae98c23e79eed40e37c23445e6d8",
+        "version" : "1.0.0"
       }
     },
     {
