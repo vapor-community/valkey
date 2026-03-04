@@ -26,7 +26,7 @@ struct TestCache {
         }
     }
 
-    // Test that cache get reflects what was manually put in Valkey
+    /// Test that cache get reflects what was manually put in Valkey
     @Test func valkeyCacheSet() async throws {
         try await withApp { app in
             let client = ValkeyClient(
@@ -51,7 +51,7 @@ struct TestCache {
         }
     }
 
-    // Test that cache get reflects what was manually put in Valkey
+    /// Test that cache get reflects what was manually put in Valkey
     @Test func valkeyCacheDelete() async throws {
         try await withApp { app in
             let client = ValkeyClient(
