@@ -1,41 +1,55 @@
-// swift-tools-version: 6.1
+// swift-tools-version: 6.4
 
 import PackageDescription
 
 let package = Package(
-    name: "VaporValkey",
+    name: "vapor-valkey",
     platforms: [
-        .macOS(.v15),
-        .iOS(.v13),
-        .tvOS(.v13),
-        .watchOS(.v6),
+        .macOS("26.2"),
+        .iOS("26.2"),
+        .tvOS("26.2"),
+        .watchOS("26.2"),
     ],
     products: [
-        .library(
-            name: "VaporValkey",
-            targets: ["VaporValkey"]
-        ),
+        .library(name: "VaporValkey", targets: ["VaporValkey"])
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-server/swift-service-lifecycle.git", from: "2.0.0"),
         .package(url: "https://github.com/valkey-io/valkey-swift.git", from: "1.0.0"),
-        .package(url: "https://github.com/vapor/vapor.git", from: "4.100.0"),
+        .package(url: "https://github.com/vapor/vapor.git", from: "5.0.0-beta.4", traits: []),
     ],
     targets: [
         .target(
             name: "VaporValkey",
             dependencies: [
-                .product(name: "ServiceLifecycle", package: "swift-service-lifecycle"),
                 .product(name: "Valkey", package: "valkey-swift"),
                 .product(name: "Vapor", package: "vapor"),
-            ]
+            ],
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "VaporValkeyTests",
             dependencies: [
-                "VaporValkey",
+                .target(name: "VaporValkey"),
                 .product(name: "VaporTesting", package: "vapor"),
-            ]
+            ],
+            swiftSettings: swiftSettings
         ),
     ]
 )
+
+var swiftSettings: [SwiftSetting] {
+    [
+        .strictMemorySafety(),
+        .treatAllWarnings(as: .error),
+        .enableUpcomingFeature("ExistentialAny"),
+        .enableUpcomingFeature("InternalImportsByDefault"),
+        .enableUpcomingFeature("MemberImportVisibility"),
+        .enableUpcomingFeature("InferIsolatedConformances"),
+        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+        .enableUpcomingFeature("ImmutableWeakCaptures"),
+        .enableExperimentalFeature("SuppressedAssociatedTypesWithDefaults"),
+        .enableExperimentalFeature("LifetimeDependence"),
+        .enableExperimentalFeature("Lifetimes"),
+        .enableUpcomingFeature("LifetimeDependence"),
+    ]
+}
