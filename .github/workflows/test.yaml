@@ -1,23 +1,18 @@
 name: Test
-
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  pull_request: { types: [opened, reopened, synchronize, ready_for_review] }
+  push: { branches: [main, vapor5] }
 
 jobs:
-  linux:
+  linux-test:
     name: Test on Linux - ${{ matrix.swift-image }}
     strategy:
       matrix:
         swift-image:
-          - "swift:6.1-jammy"
-          - "swift:6.1-noble"
-          - "swift:6.2-jammy"
-          - "swift:6.2-noble"
+          - swift:6.4-resolute
     runs-on: ubuntu-latest
     container: ${{ matrix.swift-image }}
     services:
@@ -26,8 +21,41 @@ jobs:
     env:
       VALKEY_HOSTNAME: valkey
     steps:
+    - name: Install curl
+      run: apt-get update -yq && apt-get install -y curl
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
     - name: Test
-      run: |
-        swift test
+      run: swift test --enable-code-coverage
+    - name: Upload coverage data
+      uses: vapor/swift-codecov-action@v0.3.7
+      with:
+        codecov_token: ${{ secrets.CODECOV_TOKEN }}
+
+  lint:
+    runs-on: ubuntu-latest
+    container: swift:6.4-resolute
+    timeout-minutes: 5
+    steps:
+      - name: Configure git
+        run: git config --global --add safe.directory "${GITHUB_WORKSPACE}"
+      - name: Check out code
+        uses: actions/checkout@v7
+      - name: Lint
+        run: |
+          apt -q update && apt -yq install curl
+          curl -s https://raw.githubusercontent.com/swiftlang/github-workflows/refs/heads/main/.github/workflows/scripts/check-swift-format.sh | bash
+
+  submit-dependencies:
+    permissions:
+      contents: write
+    if: ${{ github.event_name == 'push' }}
+    uses: vapor/ci/.github/workflows/submit-deps.yml@86063c56edafba6c24009fca0db54a6a3bad4ea3 # main
+    secrets: inherit
+
+  foundation-linking:
+    uses: vapor/ci/.github/workflows/check-foundation-linking.yml@86063c56edafba6c24009fca0db54a6a3bad4ea3 # main
+    permissions:
+      contents: read
+    with:
+      swift_image: swift:6.4-resolute
