@@ -1,9 +1,17 @@
-# Vapor Valkey
+<div align="center">
+<h1>Vapor Valkey</h1>
+<br>
 
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fvapor-community%2Fvalkey%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/vapor-community/valkey)
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Fvapor-community%2Fvalkey%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/vapor-community/valkey)
-![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/vapor-community/valkey/test.yaml)
-![Codecov](https://img.shields.io/codecov/c/github/vapor-community/valkey)
+[![Documentation](https://design.vapor.codes/images/readthedocs.svg)](https://docs.vapor.codes/)
+[![Team Chat](https://design.vapor.codes/images/discordchat.svg)](https://discord.gg/vapor)
+[![MIT License](https://design.vapor.codes/images/mitlicense.svg)](LICENSE)
+[![Continuous Integration](https://img.shields.io/github/actions/workflow/status/vapor/valkey/test.yml?event=push&style=plastic&logo=github&label=tests&logoColor=ccc)](https://github.com/vapor/valkey/actions/workflows/test.yml)
+[![Code Coverage](https://img.shields.io/codecov/c/gh/vapor/valkey?style=plastic&logo=codecov&label=codecov)](https://codecov.io/gh/vapor/valkey)
+[![Swift 6.4+](https://design.vapor.codes/images/swift64up.svg)](https://swift.org)
+
+</div>
+
+<br>
 
 This library provides Valkey/Redis drivers for [Vapor](https://github.com/vapor/vapor) caching and sessions, based on [valkey-swift](https://github.com/valkey-io/valkey-swift).
 
@@ -36,7 +44,3 @@ app.addService(valkeyClient)
 ```
 
 For more information about Vapor's session system, see [Sessions](https://docs.vapor.codes/advanced/sessions/).
-
-## Documentation
-
-User guides and reference documentation for Vapor Valkey can be found on the [Swift Package Index](https://swiftpackageindex.com/vapor-community/valkey/documentation).

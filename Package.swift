@@ -5,10 +5,10 @@ import PackageDescription
 let package = Package(
     name: "vapor-valkey",
     platforms: [
-        .macOS("26.2"),
-        .iOS("26.2"),
-        .tvOS("26.2"),
-        .watchOS("26.2"),
+        .macOS(.v27),
+        .iOS(.v27),
+        .tvOS(.v27),
+        .watchOS(.v27),
     ],
     products: [
         .library(name: "VaporValkey", targets: ["VaporValkey"])
