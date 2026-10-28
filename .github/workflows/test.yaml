@@ -3,10 +3,10 @@ name: Test
 on:
   push:
     branches:
-      - main
+      - vapor4
   pull_request:
     branches:
-      - main
+      - vapor4
 
 jobs:
   linux:
@@ -18,16 +18,20 @@ jobs:
           - "swift:6.1-noble"
           - "swift:6.2-jammy"
           - "swift:6.2-noble"
+          - "swift:6.3-jammy"
+          - "swift:6.3-noble"
+          - "swift:6.4-jammy"
+          - "swift:6.4-noble"
     runs-on: ubuntu-latest
     container: ${{ matrix.swift-image }}
     services:
       valkey:
-        image: valkey/valkey:8.0
+        image: valkey/valkey:9
     env:
       VALKEY_HOSTNAME: valkey
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
     - name: Test
       run: |
         swift test

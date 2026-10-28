@@ -1,0 +1,17 @@
+name: deploy-api-docs
+on:
+  push:
+    branches:
+      - main
+      - vapor4
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    uses: vapor/api-docs/.github/workflows/deploy.yml@main
+    secrets: inherit
+    with:
+      package: valkey
+      ref: ${{ github.ref_name }}

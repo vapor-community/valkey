@@ -1,5 +1,5 @@
 version: 1
-builder:
-  configs:
-    - documentation_targets:
-        - "VaporValkey"
+metadata:
+  authors: "Maintained by the Vapor Core Team with hundreds of contributions from the Vapor Community."
+external_links:
+  documentation: "https://api.vapor.codes/valkey"
