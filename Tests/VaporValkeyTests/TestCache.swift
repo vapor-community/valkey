@@ -4,7 +4,6 @@ import Vapor
 import VaporTesting
 import VaporValkey
 
-@Suite
 struct TestCache {
     @Test func valkeyCacheGet() async throws {
         try await withApp { app in

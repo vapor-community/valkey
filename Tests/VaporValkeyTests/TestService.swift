@@ -4,7 +4,6 @@ import Vapor
 import VaporTesting
 import VaporValkey
 
-@Suite
 struct TestService {
     @Test func valkeyService() async throws {
         try await withApp { app in
